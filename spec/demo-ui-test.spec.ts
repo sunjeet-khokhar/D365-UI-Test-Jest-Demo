@@ -13,7 +13,7 @@ describe("Basic operations UCI", () => {
         jest.setTimeout(60000);
 
         await xrmTest.launch("chromium", {
-            headless: !!process.env.D365_UI_TEST_HEADLESS,
+            headless: false,
             args: [
                 '--disable-setuid-sandbox',
                 '--disable-infobars',
@@ -33,11 +33,12 @@ describe("Basic operations UCI", () => {
     test("Start D365", async () => {
         const settingsPath = path.join(__dirname, "../../settings.txt");
         const settingsFound = fs.existsSync(settingsPath);
-        const config = settingsFound ? fs.readFileSync(settingsPath, {encoding: "utf-8"}) : `${process.env.D365_UI_TEST_URL ?? process.env.CRM_URL ?? ""},${process.env.D365_UI_TEST_USERNAME ?? process.env.USER_NAME ?? ""},${process.env.D365_UI_TEST_PASSWORD ?? process.env.USER_PASSWORD ?? ""},${process.env.D365_UI_TEST_MFA_SECRET ?? process.env.MFA_SECRET ?? ""}`;
+        const config = settingsFound ? fs.readFileSync(settingsPath, {encoding: "utf-8"}) : `${process.env.D365_UI_TEST_URL ?? process.env.CRM_URL ?? ""},${process.env.D365_UI_TEST_USERNAME ?? process.env.USER_NAME ?? ""},${process.env.D365_UI_TEST_PASSWORD ?? process.env.USER_PASSWORD ?? ""}`;
         
-        const [url, user, password, mfaSecret] = config.split(",");
-
-        await xrmTest.open(url, { userName: user, password: password, mfaSecret: mfaSecret ?? undefined });
+        const [url, user, password] = config.split(",");
+        //await xrmTest.open(url, { userName: user, password: password});
+        const page = await xrmTest.open('https://orgcc4772a4.crm.dynamics.com', { userName: 'ss@trvialsearch.onmicrosoft.com', password: 'Yorks64&*NZY', passwordFieldSelector: "#password_input", userNameFieldSelector: "#userName_input" });
+        //const page = await xrmTest.open(process.env.CRM_URL, { userName: process.env.CRM_USER_NAME, password: process.env.CRM_PASSWORD, passwordFieldSelector: "#password_input", userNameFieldSelector: "#userName_input" });
     });
 
     test("Open new account form", async () => {
