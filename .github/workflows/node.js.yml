@@ -11,8 +11,8 @@ on:
     
 env:
   CRM_URL: ${{ secrets.CRM_URL }}
-  CRM_USER_NAME: ${{ secret.CRM_USER_NAME }}
-  CRM_PASSWORD: ${{ secret.CRM_PASSWORD }}
+  CRM_USER_NAME: ${{ secrets.CRM_USER_NAME }}
+  CRM_PASSWORD: ${{ secrets.CRM_PASSWORD }}
 
 jobs:
   build:
