@@ -13,7 +13,7 @@ describe("Basic operations UCI", () => {
         jest.setTimeout(60000);
 
         await xrmTest.launch("chromium", {
-            headless: true,
+            headless: false,
             args: [
                 '--disable-setuid-sandbox',
                 '--disable-infobars',
@@ -31,12 +31,13 @@ describe("Basic operations UCI", () => {
     });
 
     test("Start D365", async () => {
-        await xrmTest.open(process.env.CRM_URL, { userName: process.env.CRM_USER_NAME, password: process.env.CRM_PASSWORD, passwordFieldSelector: "#password_input", userNameFieldSelector: "#userName_input" });
+        await page.goto('https://orgcc4772a4.crm.dynamics.com');
+        await xrmTest.open('https://orgcc4772a4.crm.dynamics.com', { userName: 'ss@trvialsearch.onmicrosoft.com', password: '12345', passwordFieldSelector: "#password_input", userNameFieldSelector: "#userName_input" });
     });
 
-    test("Open new account form", async () => {
+    /*test("Open new account form", async () => {
         await xrmTest.Navigation.openCreateForm("account");
-    });
+    });*/
 
     afterAll(() => {
         return xrmTest.close();
